@@ -32,9 +32,9 @@ namespace ProjectName
             //! Port in Telegraf that routes to InfluxDB
             const int TELEGRAF_PORT_DEV = 10095;
             //! Hostname of Telegraf container
-            const string COSMOS_WEB_ADDR = "cosmos_telegraf";
+            // const string COSMOS_WEB_ADDR = "cosmos_telegraf";
             //! Address of Telegraf instance. Use if running locally, or change to IP address of where Telegraf is running.
-            // const string COSMOS_WEB_ADDR = "127.0.0.1";
+            const string COSMOS_WEB_ADDR = "127.0.0.1";
 
             //! Class that helps handle incoming packets
             PacketHandler packethandler;

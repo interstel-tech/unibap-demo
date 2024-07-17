@@ -192,7 +192,7 @@ void ProjectName::Node0::Agent::init_agent(char *argv[], string node_name, uint1
     // A Realm can be thought of as a project.
     // A Node can be thought of as a distinct entity capable of independent action in the scope of the project.
     // An Agent is one of potentially many processes running on the node.
-    agent = new Support::Agent("projectname", node_name, "main", 0., 10000, false, 0, NetworkType::UDP, debug);
+    agent = new Support::Agent("unibapdemo", node_name, "main", 0., 10000, false, 0, NetworkType::UDP, debug);
 
     // Check if agent was successfully started
     int32_t iretn = 0;
