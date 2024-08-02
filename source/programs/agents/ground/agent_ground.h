@@ -36,9 +36,9 @@ namespace ProjectName
             //! Port in Telegraf that routes to InfluxDB
             const int TELEGRAF_PORT_DEV = 10095;
             //! Hostname of Telegraf container
-            // const string COSMOS_WEB_ADDR = "cosmos_telegraf";
+            // string cosmos_web_addr = "cosmos_telegraf";
             //! Address of Telegraf instance. Use if running locally, or change to IP address of where Telegraf is running.
-            const string COSMOS_WEB_ADDR = "127.0.0.1";
+            string cosmos_web_addr = "127.0.0.1";
             //! Address or hostname of the flight agent
             string remote_address = "127.0.0.1";
 

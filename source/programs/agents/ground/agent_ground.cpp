@@ -51,7 +51,7 @@ void ProjectName::Ground::Agent::Loop()
     while(agent->running())
     {
         check_events();
-        ping_inactive_nodes();
+        // ping_inactive_nodes();
 
         // Comm - Internal
         // Handle packets in the main-thread queue (0)
@@ -185,6 +185,10 @@ void ProjectName::Ground::Agent::handle_cmd_line_args(int argc, char *argv[])
         {
             remote_address = argv[++i];
         }
+        else if ((arg == "-w" || arg == "--cosmos_web_addr") && i+1 < argc)
+        {
+            cosmos_web_addr = argv[++i];
+        }
         else
         {
             cout << "Error parsing argument: " << arg << endl;
@@ -196,9 +200,10 @@ void ProjectName::Ground::Agent::handle_cmd_line_args(int argc, char *argv[])
     {
         cout << "Usage: " << argv[0] << " [options]" << endl;
         cout << "Options:" << endl;
-        cout << "  -h, --help              Display this help message" << endl;
-        cout << "  -d, --debug             Enable debug printing" << endl;
-        cout << "  -r, --remote ADDRESS    Address or hostname of the flight agent" << endl;
+        cout << "  -h, --help                       Display this help message" << endl;
+        cout << "  -d, --debug                      Enable debug printing" << endl;
+        cout << "  -r, --remote ADDRESS             Address or hostname of the flight agent" << endl;
+        cout << "  -w, --cosmos_web_addr ADDRESS    Address or hostname of the Telegraf instance" << endl;
         exit(0);
     }
 }
@@ -220,7 +225,7 @@ void ProjectName::Ground::Agent::init_agent(string node_name)
     }
 
     // Open up a socket for sending beacon data to Telegraf
-    open_cosmos_web_socket(cosmos_web_telegraf_channel_dev, COSMOS_WEB_ADDR, TELEGRAF_PORT_DEV);
+    open_cosmos_web_socket(cosmos_web_telegraf_channel_dev, cosmos_web_addr, TELEGRAF_PORT_DEV);
 
     // Set channels
     add_channels(agent);
