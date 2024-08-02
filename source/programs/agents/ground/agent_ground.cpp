@@ -183,7 +183,7 @@ void ProjectName::Ground::Agent::handle_cmd_line_args(int argc, char *argv[])
         }
         else if ((arg == "-r" || arg == "--remote") && i+1 < argc)
         {
-            remote_address = argv[i+1];
+            remote_address = argv[++i];
         }
         else
         {
