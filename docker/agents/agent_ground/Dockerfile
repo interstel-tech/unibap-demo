@@ -1,4 +1,5 @@
 # Tag: hsfl2/demo_agent_ground:latest
+# Tag: hsfl2/demo_agent_ground:0.1.0
 
 ############################################
 # BUILD STAGE
