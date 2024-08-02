@@ -9,8 +9,8 @@ namespace ProjectName
             // Externs declared in obc_subagents.h and defined here
             NODE_ID_TYPE node0_node_id = 0;
             NODE_ID_TYPE ground_node_id = 0;
-            thread file_thread;
-            Cosmos::Module::FileModule* file_module;
+            // thread file_thread;
+            // Cosmos::Module::FileModule* file_module;
             thread websocket_thread;
             Cosmos::Module::WebsocketModule* websocket_module;
 
@@ -26,25 +26,25 @@ namespace ProjectName
 
                 // File subagent
                 // For file transfers
-                {
-                    file_module = new Cosmos::Module::FileModule();
-                    iretn = file_module->Init(agent, { "node0" });
-                    if (iretn < 0)
-                    {
-                        printf("%f FILE: Init Error - Not Starting Loop: %s\n",agent->uptime.split(), cosmos_error_string(iretn).c_str());
-                        fflush(stdout);
-                    }
-                    else
-                    {
-                        file_thread = thread([=] { file_module->Loop(); });
-                        secondsleep(3.);
-                        printf("%f FILE: Thread started\n", agent->uptime.split());
-                        fflush(stdout);
-                    }
-                    // Set radios to use and in the order of the use priority, highest to lowest
-                    uint8_t COMM = agent->channel_number("COMM");
-                    file_module->set_radios({COMM});
-                }
+                // {
+                //     file_module = new Cosmos::Module::FileModule();
+                //     iretn = file_module->Init(agent, { "node0" });
+                //     if (iretn < 0)
+                //     {
+                //         printf("%f FILE: Init Error - Not Starting Loop: %s\n",agent->uptime.split(), cosmos_error_string(iretn).c_str());
+                //         fflush(stdout);
+                //     }
+                //     else
+                //     {
+                //         file_thread = thread([=] { file_module->Loop(); });
+                //         secondsleep(3.);
+                //         printf("%f FILE: Thread started\n", agent->uptime.split());
+                //         fflush(stdout);
+                //     }
+                //     // Set radios to use and in the order of the use priority, highest to lowest
+                //     uint8_t COMM = agent->channel_number("COMM");
+                //     file_module->set_radios({COMM});
+                // }
 
                 // Websocket subagent
                 // For communicating with PacketComm packets with websockets

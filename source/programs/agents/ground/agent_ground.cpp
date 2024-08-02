@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
         printf("Error in agent->wait() %d\n", iretn);
         exit(iretn);
     }
-    file_thread.join();
+    // file_thread.join();
     websocket_thread.join();
     agent->shutdown();
 

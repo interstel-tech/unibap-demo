@@ -30,8 +30,8 @@ namespace ProjectName
             extern NODE_ID_TYPE ground_node_id;
 
             // File subagent
-            extern thread file_thread;
-            extern Cosmos::Module::FileModule* file_module;
+            // extern thread file_thread;
+            // extern Cosmos::Module::FileModule* file_module;
             // Websocket subagent
             extern thread websocket_thread;
             extern Cosmos::Module::WebsocketModule* websocket_module;
