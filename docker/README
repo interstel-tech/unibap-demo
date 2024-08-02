@@ -20,13 +20,13 @@ Note 2: The docker buildx build --push commands below will push straight to hub.
 docker login
 
 # Change directories to the directory containing the Dockerfile of the image you wish to build.
-# Example for building the agent_file image
-cd PATH/TO/COSMOS/CORE/docker/agents/agent_file
+# Example for building the demo_agent_ground image
+cd PATH/TO/COSMOS/THIS/REPO/docker/agents/agent_ground
 
 # Build the image for x86 and ARM64
 # Change the tags to the appropriate image name
 # Change the versioning number in the tag to the appropriate number
-# The --no-cache option forces a rebuild, including the git clone. Use if the repo has updated.
-docker buildx build --push --platform linux/amd64,linux/arm64 --tag hsfl2/IMAGENAME:NEWVERSION --tag hsfl2/IMAGENAME:latest --no-cache .
-# Example for agent_file v0.1.0
-docker buildx build --push --platform linux/amd64,linux/arm64 --tag hsfl2/agent_file:0.1.0 --tag hsfl2/agent_file:latest --no-cache .
+# Use the --no-cache option if you want to force a full rebuild.
+docker buildx build --push --platform linux/amd64,linux/arm64 --tag hsfl2/IMAGENAME:NEWVERSION --tag hsfl2/IMAGENAME:latest .
+# Example for demo_agent_ground v0.1.0
+docker buildx build --push --platform linux/amd64,linux/arm64 --tag hsfl2/demo_agent_ground:0.1.0 --tag hsfl2/demo_agent_ground:latest .

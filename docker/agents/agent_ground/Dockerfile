@@ -27,9 +27,11 @@ RUN mkdir -p \
 
 # Clone source code
 WORKDIR /cosmos/source
-RUN git clone https://github.com/hsfl/cosmos-core.git core
+ADD https://api.github.com/repos/hsfl/cosmos-core/git/refs/heads/master version.json
+RUN git clone --depth 1 https://github.com/hsfl/cosmos-core.git core
 WORKDIR /cosmos/source/projects
-RUN git clone https://github.com/interstel-tech/unibap-demo.git
+ADD https://api.github.com/repos/interstel-tech/unibap-demo/git/refs/heads/main version.json
+RUN git clone --depth 1 https://github.com/interstel-tech/unibap-demo.git
 
 # Configure project
 WORKDIR unibap-demo/build
