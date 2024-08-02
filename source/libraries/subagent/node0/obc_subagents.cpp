@@ -15,8 +15,10 @@ namespace ProjectName
             Cosmos::Module::FileModule* file_module;
             thread websocket_thread;
             Cosmos::Module::WebsocketModule* websocket_module;
+            thread sensor_thread;
+            SensorSubagent* sensor_subagent;
 
-            int32_t init_subagents(Agent *agent)
+            int32_t init_subagents(Agent *agent, string remote_address)
             {
                 int32_t iretn = 0;
 
@@ -71,7 +73,7 @@ namespace ProjectName
                 // For communicating with PacketComm packets with websockets
                 {
                     websocket_module = new Cosmos::Module::WebsocketModule(Cosmos::Module::WebsocketModule::PacketizeFunction::Raw, Cosmos::Module::WebsocketModule::PacketizeFunction::Raw);
-                    iretn = websocket_module->Init(agent, "127.0.0.1", 10071, 10070, "COMM");
+                    iretn = websocket_module->Init(agent, remote_address, 10071, 10070, "COMM");
                     if (iretn < 0)
                     {
                         printf("%f COMM: Init Error - Not Starting Loop: %s\n",agent->uptime.split(), cosmos_error_string(iretn).c_str());
@@ -82,6 +84,25 @@ namespace ProjectName
                         websocket_thread = std::thread([=] { websocket_module->Loop(); });
                         secondsleep(3.);
                         printf("%f COMM: Thread started\n", agent->uptime.split());
+                        fflush(stdout);
+                    }
+                }
+
+                // Sensor subagent
+                // For handling sensor data
+                {
+                    sensor_subagent = new SensorSubagent();
+                    iretn = sensor_subagent->Init(agent);
+                    if (iretn < 0)
+                    {
+                        printf("%f SENSOR: Init Error - Not Starting Loop: %s\n",agent->uptime.split(), cosmos_error_string(iretn).c_str());
+                        fflush(stdout);
+                    }
+                    else
+                    {
+                        sensor_thread = thread([=] { sensor_subagent->Loop(); });
+                        secondsleep(3.);
+                        printf("%f SENSOR: Thread started\n", agent->uptime.split());
                         fflush(stdout);
                     }
                 }

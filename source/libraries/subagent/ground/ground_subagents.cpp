@@ -14,7 +14,7 @@ namespace ProjectName
             thread websocket_thread;
             Cosmos::Module::WebsocketModule* websocket_module;
 
-            int32_t init_subagents(Agent *agent)
+            int32_t init_subagents(Agent *agent, string remote_address)
             {
                 int32_t iretn = 0;
 
@@ -50,7 +50,7 @@ namespace ProjectName
                 // For communicating with PacketComm packets with websockets
                 {
                     websocket_module = new Cosmos::Module::WebsocketModule(Cosmos::Module::WebsocketModule::PacketizeFunction::Raw, Cosmos::Module::WebsocketModule::PacketizeFunction::Raw);
-                    iretn = websocket_module->Init(agent, "127.0.0.1", 10070, 10071, "COMM");
+                    iretn = websocket_module->Init(agent, remote_address, 10070, 10071, "COMM");
                     if (iretn < 0)
                     {
                         printf("%f COMM: Init Error - Not Starting Loop: %s\n",agent->uptime.split(), cosmos_error_string(iretn).c_str());
