@@ -1,3 +1,5 @@
+# Tag: hsfl2/demo_agent_ground:latest
+
 ############################################
 # BUILD STAGE
 FROM ubuntu:20.04 AS builder
@@ -33,10 +35,11 @@ WORKDIR unibap-demo/build
 RUN ./do_cmake_linux
 # Build project
 WORKDIR linux
-RUN make -j8 agent_ground
+RUN make -j8 agent agent_ground
 # Manually move the compiled targets to /cosmos/bin
-WORKDIR programs/agents/ground
-RUN cp agent_ground /cosmos/bin/
+WORKDIR programs/agents
+RUN cp agent /cosmos/bin/ && \
+    cp ground/agent_ground /cosmos/bin/
 
 ############################################
 # FINAL IMAGE
@@ -46,13 +49,13 @@ FROM ubuntu:20.04
 ARG UID=26767
 ARG GID=26767
 
+# Copy the binaries from the builder stage
+WORKDIR /home/cosmosuser/cosmos/bin
+COPY --from=builder /cosmos/bin/* .
+
 # Copy over a demo realm
 WORKDIR /home/cosmosuser/cosmos/realms
 COPY --from=hsfl2/realms:demo /demo ./demo
-
-# Copy the binaries from the builder stage
-WORKDIR /home/cosmosuser/cosmos/bin
-COPY --from=builder /cosmos/bin/agent_ground .
 
 # Set up basic COSMOS directory structure
 WORKDIR /home/cosmosuser/cosmos
@@ -72,9 +75,5 @@ USER cosmosuser
 # Add cosmos binary directory to path
 ENV PATH="$PATH:/home/cosmosuser/cosmos/bin"
 
-# Set the propagator_arg environment variable
-ENV AGENT_ARG=""
-
 COPY ./docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["$AGENT_ARG"]

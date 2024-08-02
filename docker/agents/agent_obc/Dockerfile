@@ -1,3 +1,5 @@
+# Tag: hsfl2/demo_agent_obc:latest
+
 ############################################
 # BUILD STAGE
 FROM ubuntu:20.04 AS builder
@@ -21,6 +23,10 @@ RUN mkdir -p \
     ./source \
     ./nodes \
     ./bin
+
+# Clone resources. Necessary for coordinate conversions.
+WORKDIR /cosmos
+RUN git clone https://github.com/hsfl/cosmos-resources.git resources
 
 # Clone source code
 WORKDIR /cosmos/source
@@ -46,13 +52,17 @@ FROM ubuntu:20.04
 ARG UID=26767
 ARG GID=26767
 
-# Copy over a demo realm
-WORKDIR /home/cosmosuser/cosmos/realms
-COPY --from=hsfl2/realms:demo /demo ./demo
+# Copy resources folder from the builder stage
+WORKDIR /home/cosmosuser/cosmos
+COPY --from=builder /cosmos/resources .
 
 # Copy the binaries from the builder stage
 WORKDIR /home/cosmosuser/cosmos/bin
-COPY --from=builder /cosmos/bin/agent_obc .
+COPY --from=builder /cosmos/bin/* .
+
+# Copy over a demo realm
+WORKDIR /home/cosmosuser/cosmos/realms
+COPY --from=hsfl2/realms:demo /demo ./demo
 
 # Set up basic COSMOS directory structure
 WORKDIR /home/cosmosuser/cosmos
@@ -72,9 +82,5 @@ USER cosmosuser
 # Add cosmos binary directory to path
 ENV PATH="$PATH:/home/cosmosuser/cosmos/bin"
 
-# Set the propagator_arg environment variable
-ENV AGENT_ARG=""
-
 COPY ./docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["$AGENT_ARG"]
