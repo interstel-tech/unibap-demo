@@ -73,7 +73,7 @@ namespace SubAgent
         string estring;
         agent->send_request(propagator_info, "get_location " + agent->cinfo->node.name, response, 1.);
         vector <string> args = string_split(response, "\n");
-        // agent->debug_log.Printf("%s\n", response.c_str());
+        agent->debug_log.Printf("Measurement: %s\n", response.c_str());
         if (args.size() > 1)
         {
             json11::Json jargs = json11::Json::parse(args[1], estring);
@@ -97,6 +97,11 @@ namespace SubAgent
                     }
                 }
             }
+        }
+        else
+        {
+            // No valid means propagator may have gone missing
+            propagator_info.exists = false;
         }
     }
 }
