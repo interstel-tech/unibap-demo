@@ -11,6 +11,7 @@
 #include "utils/common.h"
 #include "utils/utils.h"
 #include "subagent/ground/ground_subagents.h"
+#include "telem_helpers/TelemToDatabase.h"
 
 namespace ProjectName
 {
@@ -41,6 +42,8 @@ namespace ProjectName
             string cosmos_web_addr = "127.0.0.1";
             //! Address or hostname of the flight agent
             string remote_address = "127.0.0.1";
+            //! Helper class for sending telemetry to the other database
+            TelemToDatabase telemHelper;
 
             //! Class that helps handle incoming packets
             PacketHandler packethandler;

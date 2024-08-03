@@ -226,6 +226,9 @@ void ProjectName::Ground::Agent::init_agent(string node_name)
 
     // Open up a socket for sending beacon data to Telegraf
     open_cosmos_web_socket(cosmos_web_telegraf_channel_dev, cosmos_web_addr, TELEGRAF_PORT_DEV);
+    telemHelper.initialize(cosmos_web_addr, agent->cinfo);
+    // TODO: probably not desireable in the long run to put this here
+    telemHelper.reset_db(agent->cinfo);
 
     // Set channels
     add_channels(agent);
@@ -267,6 +270,8 @@ int32_t ProjectName::Ground::Agent::DecodeBeacon(PacketComm& packet, string &res
 
     // Send json beacon data to Telegraf dev port, which will be fed into the database
     socket_sendto(cosmos_web_telegraf_channel_dev, response);
+
+    telemHelper.send_telem_to_cosmos_web(agent->cinfo, beacon);
 
     return iretn;
 }
