@@ -224,6 +224,9 @@ void ProjectName::Ground::Agent::init_agent(string node_name)
         agent->debug_log.Printf("%16.10f %s Started Agent %s on Node %s Dated %s\n",currentmjd(), mjd2iso8601(currentmjd()).c_str(), agent->getAgent().c_str(), agent->getNode().c_str(), utc2iso8601(data_ctime(file_name_arg0)).c_str());
     }
 
+    // TODO: not ideal but must be done here to visualize correctly
+    agent->cinfo->node.type = NODE_TYPE_SATELLITE;
+
     // Open up a socket for sending beacon data to Telegraf
     open_cosmos_web_socket(cosmos_web_telegraf_channel_dev, cosmos_web_addr, TELEGRAF_PORT_DEV);
     telemHelper.initialize(cosmos_web_addr, agent->cinfo);
