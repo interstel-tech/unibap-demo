@@ -43,10 +43,10 @@ WORKDIR unibap-demo/build
 RUN ./do_cmake_linux
 # Build project
 WORKDIR linux
-RUN make -j8 agent_obc
+RUN make -j8 agent_obc make_devices
 # Manually move the compiled targets to /cosmos/bin
-WORKDIR programs/agents/node0
-RUN cp agent_obc /cosmos/bin/
+WORKDIR programs
+RUN cp agents/node0/agent_obc general/make_devices /cosmos/bin/
 
 ############################################
 # FINAL IMAGE

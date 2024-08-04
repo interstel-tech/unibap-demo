@@ -8,5 +8,9 @@
 # This is useful when mounting volumes from the host machine to the container.
 umask 002
 
+# Setup the agent's device setup files for this node
+# TODO: Make this more generic with args specified at buildtime
+make_devices node0
+
 # Pass script arguments to agent
 agent_obc "$@"

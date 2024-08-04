@@ -1,8 +1,8 @@
 version: '3'
 services:
-    fileagent_flight:
+    agent_file_flight:
         image: hsfl2/agent_file:0.1.2
-        container_name: fileagent_flight
+        container_name: agent_file_flight
         hostname: demo_flightnode
         tty: true
         logging:
@@ -15,9 +15,9 @@ services:
         volumes:
           - ${HOME}/cosmos/nodes:/home/cosmosuser/cosmos/nodes
 
-    fileagent_ground:
+    agent_file_ground:
         image: hsfl2/agent_file:0.1.2
-        container_name: fileagent_ground
+        container_name: agent_file_ground
         hostname: demo_groundnode
         tty: true
         logging:
